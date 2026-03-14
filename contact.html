@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اتصل بنا | إكسير الطبيعة</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Cairo', sans-serif;">
+    <header>
+        <div class="logo">تواصل معنا</div>
+        <nav class="nav-links">
+            <div onclick="location.href='index.html'" style="cursor:pointer; color: var(--primary); font-weight: bold;">الرئيسية</div>
+        </nav>
+    </header>
+
+    <section class="active">
+        <div style="max-width: 800px; margin: auto; background: rgba(0,0,0,0.6); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="color:var(--primary); margin-bottom: 25px;">معلومات التواصل</h2>
+            
+            <div id="contact-dynamic-content" style="font-size: 1.1rem; line-height: 1.8; color: white;">
+                </div>
+
+            <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 30px 0;">
+            
+            <h3 style="color: white; margin-bottom: 15px;">أرسل رسالة سريعة</h3>
+            <input type="text" id="msg-name" placeholder="الاسم" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 10px; box-sizing: border-box;">
+            <textarea id="msg-body" placeholder="كيف يمكننا مساعدتك؟" rows="4" style="width: 100%; border-radius: 8px; padding: 12px; margin-top: 10px; border: none; box-sizing: border-box;"></textarea>
+            <button class="main-btn" onclick="sendQuickMessage()" style="width: 100%; margin-top: 20px; background: var(--primary); border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; color: black;">إرسال الاستفسار</button>
+        </div>
+    </section>
+
+    <script>
+        // وظيفة جلب البيانات من الأدمن
+        function loadContactContent() {
+            const container = document.getElementById('contact-dynamic-content');
+            // قراءة المحتوى الذي حفظته في صفحة الأدمن
+            const savedHTML = localStorage.getItem('contactPageHTML');
+            
+            if (savedHTML) {
+                container.innerHTML = savedHTML;
+            } else {
+                // محتوى افتراضي في حال لم يتم كتابة شيء في الأدمن بعد
+                container.innerHTML = `
+                    <p><i class="fas fa-map-marker-alt" style="color:var(--primary)"></i> <strong>النطاق الجغرافي:</strong> العبور، الشروق، مدينتي، التجمع.</p>
+                    <p><i class="fab fa-whatsapp" style="color:var(--primary)"></i> <strong>واتساب:</strong> 01021430030</p>
+                `;
+            }
+        }
+
+        // وظيفة إرسال الرسالة للواتساب
+        function sendQuickMessage() {
+            const name = document.getElementById('msg-name').value;
+            const body = document.getElementById('msg-body').value;
+            const config = JSON.parse(localStorage.getItem('storeConfig')) || { whatsapp: "201021430030" };
+
+            if(!name || !body) return alert("يرجى إكمال البيانات");
+
+            const text = `*استفسار جديد*%0Aالاسم: ${name}%0Aالرسالة: ${body}`;
+            window.open(`https://wa.me/${config.whatsapp}?text=${text}`, '_blank');
+        }
+
+        // تشغيل الجلب عند فتح الصفحة
+        window.onload = loadContactContent;
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿<script>if(sessionStorage.getItem('admin_auth') !== 'true') { window.location.href = 'admin-login.ar.html'; }</script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المنتجات | إكسير الطبيعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        .btn-add { background: #27ae60; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; width: 100%; font-size: 1.1rem; }
+        .product-table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        .product-table th, .product-table td { border: 1px solid #eee; padding: 12px; text-align: center; }
+        .product-table th { background: #f8f9fa; }
+        .img-preview { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .btn-delete { background: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo"><i class="fas fa-leaf"></i> إكسير الطبيعة</div>
+        <a href="admin-index.html"><i class="fas fa-chart-line"></i> الرئيسية</a>
+        <a href="admin-products.ar.html" class="active"><i class="fas fa-box"></i> إدارة المنتجات</a>
+        <a href="admin-orders.ar.html" class="active"><i class="fas fa-clipboard-list"></i> سجل الطلبات</a>
+        <a href="admin-settings.ar.html"><i class="fas fa-cog"></i> إعدادات المتجر</a>
+        <a href="index.html" target="_blank"><i class="fas fa-external-link-alt"></i> زيارة المتجر</a>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>إضافة منتج جديد</h2>
+        </div>
+
+        <div class="card" style="max-width: 600px; margin: auto;">
+            <div class="form-group">
+                <label>اسم المنتج:</label>
+                <input type="text" id="prod-name" placeholder="مثال: طماطم">
+            </div>
+            <div class="form-group">
+                <label>السعر (ج.م):</label>
+                <input type="number" id="prod-price" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>تصنيف المنتج:</label>
+                <select id="prod-category">
+                    <option value="فاكهة">الفاكهة</option>
+                    <option value="خضروات">الخضروات</option>
+                    <option value="فاكهة مجففة">فاكهة مجففة</option>
+                    <option value="منتجات طبيعية">منتجات طبيعية</option>
+                    <option value="منتجات تجميلية وطبية">منتجات تجميلية وطبية</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>صورة المنتج (تحميل من الجهاز):</label>
+                <input type="file" id="prod-image" accept="image/*">
+            </div>
+
+            <div style="text-align: center; margin: 10px 0; color: #777; font-weight: bold;">— أو —</div>
+
+<div class="form-group">
+    <label>رابط الصورة (URL):</label>
+    <input type="text" id="prod-image-url" placeholder="ضع رابط الصورة هنا (https://...)">
+</div>
+            <button class="btn-add" onclick="saveProduct()">إضافة المنتج ✅</button>
+        </div>
+
+        <hr style="margin: 40px 0; border: 0; border-top: 1px solid #ddd;">
+
+        <div class="page-header">
+            <h2>المنتجات الحالية</h2>
+        </div>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>الصورة</th>
+                    <th>الاسم</th>
+                    <th>السعر</th>
+                    <th>التصنيف</th>
+                    <th>إجراء</th>
+                </tr>
+            </thead>
+            <tbody id="products-list">
+                </tbody>
+        </table>
+    </main>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

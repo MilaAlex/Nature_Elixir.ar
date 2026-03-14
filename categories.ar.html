@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إكسير الطبيعة | الأقسام</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <header style="text-align: center; padding: 20px 0;">
+        <div class="logo-container">
+    <h1 class="glowing-logo">Nature's Elixir</h1>
+</div>
+    </header>
+
+    <nav class="nav-bar-horizontal">
+        <div class="nav-item" onclick="location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
+        </div>
+        <div class="nav-item" onclick="location.href='categories.ar.html'">
+            <i class="fas fa-leaf"></i>
+            <span>التسوق</span>
+        </div>
+        <div class="nav-item cart-nav" onclick="location.href='cart.ar.html'">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count" class="cart-badge">0</span>
+            <span>السلة</span>
+        </div>
+        <div class="nav-item" onclick="location.href='contact.ar.html'">
+            <i class="fas fa-headset"></i>
+            <span>تواصل</span>
+        </div>
+    </nav>
+
+    <section id="selector" class="active">
+        <h2 class="section-title">الأقسام المتاحة</h2>
+        <div class="category-grid">
+            <div class="cat-card" onclick="location.href='vegetables.ar.html'">
+                <i class="fas fa-carrot"></i>
+                <span>خضروات</span>
+            </div>
+            <div class="cat-card" onclick="location.href='fruits.ar.html'">
+                <i class="fas fa-apple-alt"></i>
+                <span>فاكهة</span>
+           </div>
+            <div class="cat-card" onclick="location.href='fruits.ar.html'">
+                <i class="fas fa-apple-alt"></i>
+                <span>فاكهة مجففة</span>
+            </div>
+            <div class="cat-card" onclick="location.href='special.ar.html'">
+                <i class="fas fa-star"></i>
+                <span>منتجات طبيعية</span>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <footer class="fixed-footer">
+        جميع الحقوق محفوظة لـ إكسير الطبيعة 2026
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

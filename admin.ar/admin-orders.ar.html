@@ -1,0 +1,172 @@
+﻿<script>if(sessionStorage.getItem('admin_auth') !== 'true') { window.location.href = 'admin-login.ar.html'; }</script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سجل الطلبات | إكسير الطبيعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+    <style>
+        .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-right: 5px solid #27ae60; }
+        .stat-card h3 { font-size: 0.9rem; color: #7f8c8d; margin-bottom: 10px; }
+        .stat-card p { font-size: 1.5rem; font-weight: 900; color: #2c3e50; }
+
+        .search-bar { margin-bottom: 20px; position: relative; }
+        .order-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .order-table th { background: #2c3e50; color: white; padding: 15px; }
+        .order-table td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; vertical-align: middle; }
+        
+        .items-list { font-size: 0.8rem; color: #666; text-align: right; background: #f9f9f9; padding: 5px; border-radius: 5px; display: block; margin-top: 5px; }
+        .status-badge { background: #d4edda; color: #155724; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+
+        @media print {
+            .sidebar, .btn-action, .search-bar, button, .page-header p, .logo { display: none !important; }
+            .main-content { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+            .order-table { box-shadow: none !important; border: 1px solid #000 !important; }
+            body { background: white !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo"><i class="fas fa-leaf"></i> إكسير الطبيعة</div>
+        <a href="admin-index.html"><i class="fas fa-chart-line"></i> الرئيسية</a>
+        <a href="admin-products.ar.html"><i class="fas fa-box"></i> إدارة المنتجات</a>
+        <a href="admin-orders.ar.html" class="active"><i class="fas fa-clipboard-list"></i> سجل الطلبات</a>
+        <a href="admin-settings.ar.html"><i class="fas fa-cog"></i> إعدادات المتجر</a>
+        <a href="#" onclick="sessionStorage.clear(); location.reload();" style="margin-top: auto; color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> خروج</a>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>📦 سجل الطلبات الواردة</h2>
+            <p>إدارة ومتابعة طلبات العملاء وطباعة الفواتير.</p>
+        </div>
+
+        <div class="stats-cards">
+            <div class="stat-card"><h3>إجمالي الطلبات</h3><p id="total-orders-count">0</p></div>
+            <div class="stat-card" style="border-right-color: #3498db;"><h3>إجمالي المبيعات</h3><p id="total-sales-amount">0 ج.م</p></div>
+        </div>
+
+        <div class="search-bar">
+            <button onclick="window.print()" style="background:#f39c12; color:white; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; float:left; margin-left:10px; font-family:'Cairo';">
+                <i class="fas fa-print"></i> طباعة السجل بالكامل
+            </button>
+            <button onclick="clearHistory()" style="background:#e74c3c; color:white; border:none; padding:10px 15px; border-radius:8px; cursor:pointer; float:left; font-family:'Cairo';">
+                <i class="fas fa-trash"></i> مسح السجل
+            </button>
+            
+            <div style="clear: both; padding-top:15px;">
+                <input type="text" id="orderSearch" placeholder="ابحث باسم العميل أو كود الطلب..." onkeyup="filterOrders()" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: 'Cairo';">
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>الكود</th>
+                        <th>التاريخ</th>
+                        <th>العميل والتفاصيل</th>
+                        <th>الإجمالي</th>
+                        <th class="btn-action">إجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-list"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const list = document.getElementById('orders-list');
+            
+            document.getElementById('total-orders-count').innerText = orders.length;
+            const totalSales = orders.reduce((sum, o) => sum + parseFloat(o.total), 0);
+            document.getElementById('total-sales-amount').innerText = totalSales.toFixed(2) + ' ج.م';
+
+            if (orders.length === 0) {
+                list.innerHTML = '<tr><td colspan="5" style="padding:40px; text-align:center;">لا توجد طلبات مسجلة.</td></tr>';
+                return;
+            }
+
+            list.innerHTML = orders.slice().reverse().map((o) => `
+                <tr>
+                    <td><b style="font-family:monospace;">${o.code}</b></td>
+                    <td style="font-size:0.8rem; color:#666;">${o.date}</td>
+                    <td>
+                        <strong>${o.customer}</strong>
+                        <div class="items-list">${o.itemsSummary || 'راجع الواتساب'}</div>
+                    </td>
+                    <td style="color:#27ae60; font-weight:bold;">${o.total} ج.م</td>
+                    <td class="btn-action">
+                        <button onclick="printSingleOrder('${o.code}')" style="color:#3498db; border:none; background:none; cursor:pointer; font-size:1.2rem; margin-left:10px;" title="طباعة فاتورة المندوب">
+                            <i class="fas fa-file-invoice"></i>
+                        </button>
+                        <button onclick="deleteOrder('${o.code}')" style="color:#e74c3c; border:none; background:none; cursor:pointer; font-size:1.2rem;" title="حذف">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function printSingleOrder(orderCode) {
+            const orders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const order = orders.find(o => o.code === orderCode);
+            if (!order) return;
+
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl"><head><title>فاتورة ${order.code}</title>
+                <style>
+                    body { font-family: 'Cairo', sans-serif; padding: 40px; border: 2px solid #eee; }
+                    .header { text-align: center; border-bottom: 2px solid #27ae60; padding-bottom: 10px; }
+                    .details { margin-top: 20px; font-size: 1.2rem; line-height: 2; }
+                    .total { font-size: 1.5rem; color: #27ae60; border-top: 2px solid #eee; margin-top: 20px; padding-top: 10px; }
+                </style></head>
+                <body>
+                    <div class="header"><h1>إكسير الطبيعة 🌿</h1><p>فاتورة توصيل طلب رقم: ${order.code}</p></div>
+                    <div class="details">
+                        <p><strong>التاريخ:</strong> ${order.date}</p>
+                        <p><strong>العميل:</strong> ${order.customer}</p>
+                        <p><strong>الطلبات:</strong> ${order.itemsSummary}</p>
+                        <div class="total"><strong>المطلوب تحصيله: ${order.total} ج.م</strong></div>
+                    </div>
+                </body></html>
+            `);
+            printWindow.document.close();
+            setTimeout(() => { printWindow.print(); }, 500);
+        }
+
+        function deleteOrder(code) {
+            if(confirm("حذف الطلب؟")) {
+                let orders = JSON.parse(localStorage.getItem('orderHistory')) || [];
+                orders = orders.filter(o => o.code !== code);
+                localStorage.setItem('orderHistory', JSON.stringify(orders));
+                loadOrders();
+            }
+        }
+
+        function clearHistory() {
+            if(confirm("مسح السجل بالكامل؟")) {
+                localStorage.removeItem('orderHistory');
+                loadOrders();
+            }
+        }
+
+        function filterOrders() {
+            let input = document.getElementById('orderSearch').value.toLowerCase();
+            let rows = document.querySelectorAll('#orders-list tr');
+            rows.forEach(row => { row.style.display = row.innerText.toLowerCase().includes(input) ? '' : 'none'; });
+        }
+
+        window.onload = loadOrders;
+    </script>
+</body>
+</html>

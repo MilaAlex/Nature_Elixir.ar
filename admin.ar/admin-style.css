@@ -1,0 +1,268 @@
+﻿/* admin-style.css */
+:root {
+    --admin-primary: #2c3e50;
+    --admin-secondary: #27ae60;
+    --admin-bg: #f4f6f9;
+    --admin-text: #333;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    background-color: var(--admin-bg);
+    color: var(--admin-text);
+    display: flex;
+    min-height: 100vh;
+}
+
+/* القائمة الجانبية */
+.sidebar {
+    width: 250px;
+    background-color: var(--admin-primary);
+    color: var(--white);
+    padding-top: 20px;
+    position: fixed;
+    height: 100%;
+    right: 0; /* لأننا باللغة العربية RTL */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar .logo {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--admin-secondary);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 15px;
+}
+
+.sidebar a {
+    display: block;
+    color: #bdc3c7;
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    background-color: var(--admin-secondary);
+    color: var(--white);
+}
+
+.sidebar a i {
+    margin-left: 10px;
+}
+
+/* محتوى الصفحة */
+.main-content {
+    flex: 1;
+    margin-right: 250px; /* لتفادي القائمة الجانبية */
+    padding: 30px;
+}
+
+.page-header {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+/* البطاقات للإحصائيات */
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    flex: 1;
+    text-align: center;
+}
+
+.card h3 {
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card .number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--admin-secondary);
+}
+
+
+
+/* --- لمسات إضافية للتطوير --- */
+
+/* تحسين شكل البطاقات عند الوقوف عليها */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* تنسيق الجداول (لأننا بنعرض المنتجات في جدول) */
+.product-table {
+    width: 100%;
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.product-table th {
+    background-color: var(--admin-primary);
+    color: var(--white);
+    padding: 15px;
+    font-weight: 700;
+}
+
+.product-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+/* دعم الشاشات الصغيرة (الموبايل) */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px; /* تصغير القائمة الجانبية */
+        padding-top: 10px;
+    }
+    
+    .sidebar .logo, .sidebar a span {
+        display: none; /* إخفاء النصوص وإظهار الأيقونات فقط */
+    }
+    
+    .sidebar a {
+        text-align: center;
+        padding: 15px 0;
+    }
+
+    .main-content {
+        margin-right: 70px; /* تقليل الهامش للموبايل */
+        padding: 15px;
+    }
+
+    .dashboard-cards {
+        flex-direction: column; /* البطاقات تحت بعض في الموبايل */
+    }
+}
+
+/* تنسيق الـ Datalist والـ Inputs عشان يبقوا شيك */
+input, select, textarea {
+    border: 1px solid #dcdde1;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--admin-secondary);
+    outline: none;
+    box-shadow: 0 0 5px rgba(39, 174, 96, 0.2);
+}
+
+/* الحاوية الأساسية تكون مرنة */
+.checkout-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* عشان العناصر تنزل تحت بعض في الموبايل */
+    gap: 20px;
+    padding: 15px;
+    justify-content: center;
+}
+
+/* شاشة الكمبيوتر (كبير) */
+@media (min-width: 992px) {
+    .invoice-card { width: 45%; }
+    .customer-info-form { width: 50%; }
+}
+
+/* شاشة الموبايل (صغير) */
+@media (max-width: 768px) {
+    .invoice-card, .customer-info-form {
+        width: 100%; /* تأخذ العرض بالكامل */
+    }
+    .glowing-logo {
+        font-size: 1.8rem; /* تصغير اللوجو شوية في الموبايل */
+    }
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    border-color: #27ae60;
+    outline: none;
+    box-shadow: 0 0 5px rgba(39, 174, 96, 0.2);
+}
+
+
+@media print {
+    /* إخفاء كل شيء ماعدا الجدول والعنوان */
+    .sidebar, .btn-delete, .search-bar, button, .page-header p {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+
+    .order-table {
+        box-shadow: none !important;
+        border: 1px solid #000 !important;
+    }
+
+    .order-table th {
+        background: #eee !important;
+        color: #000 !important;
+    }
+
+    .status-badge {
+        border: 1px solid #ccc !important;
+        background: none !important;
+    }
+
+    body {
+        background: white !important;
+    }
+}
+
+/* الحاوية الأساسية تكون مرنة */
+.checkout-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* عشان العناصر تنزل تحت بعض في الموبايل */
+    gap: 20px;
+    padding: 15px;
+    justify-content: center;
+}
+
+/* شاشة الكمبيوتر (كبير) */
+@media (min-width: 992px) {
+    .invoice-card { width: 45%; }
+    .customer-info-form { width: 50%; }
+}
+
+/* شاشة الموبايل (صغير) */
+@media (max-width: 768px) {
+    .invoice-card, .customer-info-form {
+        width: 100%; /* تأخذ العرض بالكامل */
+    }
+    .glowing-logo {
+        font-size: 1.8rem; /* تصغير اللوجو شوية في الموبايل */
+    }
+}

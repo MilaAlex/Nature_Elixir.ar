@@ -1,0 +1,1096 @@
+﻿:root {
+    --primary: #cddc39;
+    --dark-bg: #051005;
+    --glass: rgba(255, 255, 255, 0.07);
+}
+
+body {
+    margin: 0; padding: 0;
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--dark-bg);
+    color: white; direction: rtl;
+    overflow-x: hidden;
+}
+
+body {
+    /* استبدل background-image برابط صورتك أو مسارها المحلي */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('photo-vegetablestores.jpeg')
+    background-size: cover;        /* يجعل الصورة تغطي كامل الشاشة */
+    background-position: center;   /* يوسط الصورة */
+    background-attachment: fixed;  /* يجعل الخلفية ثابتة أثناء التمرير (احترافي جداً) */
+    background-repeat: no-repeat;
+    color: white;                  /* لضمان وضوح النصوص فوق الخلفية الداكنة */
+    margin: 0;
+    font-family: 'Cairo', sans-serif;
+}
+
+.bg-overlay {
+    position: fixed; inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.85), var(--dark-bg)), 
+                url('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80');
+    background-size: cover; z-index: -1;
+}
+
+/* الهيدر واللوجو في المنتصف */
+header { padding: 30px; text-align: center; }
+.logo { font-size: 2.2rem; font-weight: 900; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; }
+
+/* شريط التنقل والأيقونات المضيئة */
+.nav-bar-horizontal {
+    display: flex; justify-content: center; gap: 30px;
+    background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+    padding: 12px; border-bottom: 1px solid var(--primary);
+    position: sticky; top: 0; z-index: 1000;
+}
+.nav-item { cursor: pointer; text-align: center; transition: 0.3s; opacity: 0.8; position: relative; }
+.nav-item:hover { opacity: 1; transform: translateY(-3px); text-shadow: 0 0 10px var(--primary); }
+.nav-item i { display: block; font-size: 1.5rem; color: var(--primary); margin-bottom: 4px; }
+.nav-item span { font-size: 0.8rem; }
+.cart-badge { position: absolute; top: -5px; right: 5px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; font-weight: bold; }
+
+/* إدارة الأقسام */
+section { display: none; padding: 30px 5%; animation: fadeIn 0.4s; }
+section.active { display: block; }
+
+/* تصميم الفاتورة العريض (أبيض) */
+.invoice-card { background: white; color: black; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+.invoice-card table { width: 100%; border-collapse: collapse; }
+.invoice-card td { padding: 12px 0; border-bottom: 1px solid #eee; }
+
+/* بيانات العميل (داكنة وزجاجية) */
+.customer-info-form { background: rgba(0,0,0,0.6); padding: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); max-width: 800px; margin: auto; }
+
+/* الخانات الكبيرة */
+.large-input {
+    width: 100%; padding: 18px; margin-bottom: 20px; border-radius: 5px;
+    border: none; font-size: 1rem; font-family: 'Cairo'; background: white; color: black; box-sizing: border-box;
+}
+
+/* زر الواتساب المضيء */
+.confirm-btn { background: transparent; color: white; border: 1px solid var(--primary); padding: 15px 40px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
+.confirm-btn:hover { background: var(--primary); color: black; }
+
+/* الهيرو والشبكة */
+.hero-content { height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.grid, .category-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
+.card, .cat-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 20px; text-align: center; }
+.card img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* تأثير التوهج لنص "إكسير الطبيعة" */
+.glowing-text {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+    animation: pulseGlow 2s infinite alternate;
+}
+
+@keyframes pulseGlow {
+    from { opacity: 0.7; text-shadow: 0 0 10px var(--primary); }
+    to { opacity: 1; text-shadow: 0 0 20px var(--primary), 0 0 30px #fff; }
+}
+
+/* تنسيق الأيقونات المتوهجة بدلاً من الأزرار */
+.hero-icons-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.icon-box i {
+    width: 70px;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    box-shadow: 0 0 15px var(--primary);
+}
+
+.icon-box span {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+}
+
+.icon-box:hover i {
+    background: var(--primary);
+    color: black;
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 0 30px var(--primary);
+}
+
+/* تعديل بسيط لعداد السلة ليكون مخفياً في البداية */
+.cart-badge {
+    display: none; /* سيتم إظهاره عبر الجافاسكريبت */
+}
+
+.simple-footer {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05); /* خط فاصل بسيط جداً */
+}
+
+.simple-footer p {
+    font-size: 0.75rem; /* حجم خط صغير */
+    font-weight: 200;    /* أنحف درجة للخط */
+    color: rgba(255, 255, 255, 0.4); /* لون خافت ليعطي مظهر الرفق */
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 10px; /* خط رفيع جداً */
+    font-weight: 200; /* وزن خفيف للخط */
+    color: rgba(255, 255, 255, 0.5); /* لون أبيض شفاف قليلاً */
+    background: rgba(0, 0, 0, 0.3); /* خلفية داكنة خفيفة جداً لضمان الوضوح */
+    padding: 5px 0;
+    z-index: 9999; /* لضمان ظهوره فوق جميع العناصر */
+    pointer-events: none; /* لكي لا يعيق الضغط على الأزرار التي خلفه */
+    letter-spacing: 1px;
+}
+
+.cart-review-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.cart-item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 10px;
+}
+
+.item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.3);
+    padding: 5px 15px;
+    border-radius: 30px;
+}
+
+.item-controls button {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.del-item-btn {
+    color: #ff4d4d !important;
+    margin-right: 10px;
+}
+
+.qty-val { width: 40px; text-align: center; font-weight: bold; }
+
+.cart-summary-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+/* تصميم رسالة التنبيه اللحظية */
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #27ae60;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: none; /* مخفية افتراضياً */
+    z-index: 9999;
+    font-family: 'Cairo', sans-serif;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* شبكة عرض المنتجات */
+#products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* كارت المنتج الاحترافي */
+.product-card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    border-radius: 10px 10px 0 0; /* لجعل الحواف العلوية دائرية فقط */
+}
+
+.product-card h3 {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.product-card .category {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.product-card .price {
+    color: #27ae60;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+/* ========================================= */
+/* تصميم عداد الكمية (+ و -) */
+/* ========================================= */
+.qty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    background: #f4f6f9;
+    border-radius: 8px;
+    padding: 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.qty-btn {
+    background: #e0e0e0;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s;
+    color: #333;
+    font-weight: bold;
+}
+
+.qty-btn:hover {
+    background: #d5d5d5;
+}
+
+.qty-input {
+    width: 50px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* إخفاء أسهم الأرقام الافتراضية في المتصفح */
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* ========================================= */
+/* الزر المتوهج (Glow Button) */
+/* ========================================= */
+.btn-glow {
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(39, 174, 96, 0.4); /* التوهج هنا */
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-glow:hover {
+    box-shadow: 0 0 25px rgba(39, 174, 96, 0.7); /* زيادة التوهج عند اللمس */
+    transform: scale(1.02);
+}
+
+.cart-icon-container { position: relative; display: inline-block; }
+#cart-count {
+    position: absolute; top: -10px; right: -10px;
+    background: red; color: white; border-radius: 50%;
+    padding: 2px 6px; font-size: 12px; font-weight: bold;
+}
+
+/* ========================================== */
+/* تصميم كارت المنتجات الاحترافي */
+/* ========================================== */
+.product-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+/* حاوية الصورة */
+.image-container {
+    position: relative;
+    width: 100%;
+    padding-top: 75%; /* بيخلي الصورة مربعة/مستطيلة بنسبة مريحة للعين */
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.image-container img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; /* بيمنع الصورة من إنها تتمط أو تبوظ */
+}
+
+/* شارة القسم (طازج/خضار) */
+.category-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(39, 174, 96, 0.9); /* لون أخضر طبيعي */
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    z-index: 1;
+    backdrop-filter: blur(2px);
+}
+
+/* تفاصيل المنتج */
+.product-details {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* بيخلي الأزرار دايماً تحت حتى لو الاسم طويل */
+}
+
+.product-title {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin: 0 0 8px 0;
+    font-weight: 800;
+}
+
+.product-price {
+    font-size: 1.3rem;
+    color: #e67e22; /* لون برتقالي يفتح النفس للأكل */
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+.product-price span {
+    font-size: 0.85rem;
+    color: #95a5a6;
+    font-weight: normal;
+}
+
+/* أزرار الكمية (+ و -) */
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.qty-btn {
+    background: white;
+    border: 1px solid #ced4da;
+    color: #2c3e50;
+    width: 35px; height: 35px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: 0.2s;
+}
+
+.qty-btn:hover { background: #e9ecef; }
+
+.qty-input {
+    width: 50px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    outline: none;
+}
+
+/* زر إضافة للسلة */
+.add-to-cart-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.add-to-cart-btn:hover {
+    background: #219150;
+    transform: scale(1.02);
+} 
+
+/* ========================================== */
+/* شبكة عرض المنتجات (عشان يعرض منتجين في الصف للموبايل) */
+/* ========================================== */
+#products-grid {
+    display: grid;
+    /* بيخلي عرض الكارت يبدأ من 140 بيكسل، يعني هيحط كارتين جنب بعض في الموبايل براحة */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 12px;
+    padding: 15px;
+}
+
+/* ========================================== */
+/* تصميم كارت المنتج (الحجم الطبيعي والملموم) */
+/* ========================================== */
+.product-card {
+    background: #ffffff;
+    border-radius: 8px; /* دوران أخف */
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* ظل هادي جداً */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+}
+
+/* حاوية الصورة (مربعة عشان تناسب الخضار) */
+.image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* بيخلي الصورة مربعة تماماً */
+    position: relative;
+    background: #f8f9fa;
+}
+
+.image-container img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+
+/* التاج (خضار/فاكهة) - أصغر */
+.category-badge {
+    position: absolute;
+    top: 6px; right: 6px;
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* تفاصيل المنتج (مسافات أقل) */
+.product-details {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-title {
+    font-size: 0.9rem; /* خط أصغر ومناسب */
+    color: #2c3e50;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    /* السطرين دول بيخلوا الاسم لو طويل جداً يتقص ويحط نقط ... بدل ما يبوظ شكل الكارت */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 1rem;
+    color: #e67e22;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.product-price span {
+    font-size: 0.7rem;
+    color: #95a5a6;
+    font-weight: normal;
+}
+
+/* أزرار الكمية (+ و -) (ملمومة جداً) */
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: none;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.qty-btn:active { background: #e2e6ea; }
+
+.qty-input {
+    width: 35px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2c3e50;
+    outline: none;
+}
+
+/* زر السلة (رفيع وبسيط) */
+.add-to-cart-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.add-to-cart-btn:active {
+    background: #219150;
+}/* ========================================== */
+/* شبكة عرض المنتجات (عشان يعرض منتجين في الصف للموبايل) */
+/* ========================================== */
+#products-grid {
+    display: grid;
+    /* بيخلي عرض الكارت يبدأ من 140 بيكسل، يعني هيحط كارتين جنب بعض في الموبايل براحة */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 12px;
+    padding: 15px;
+}
+
+/* ========================================== */
+/* تصميم كارت المنتج (الحجم الطبيعي والملموم) */
+/* ========================================== */
+.product-card {
+    background: #ffffff;
+    border-radius: 8px; /* دوران أخف */
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* ظل هادي جداً */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+}
+
+/* حاوية الصورة (مربعة عشان تناسب الخضار) */
+.image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* بيخلي الصورة مربعة تماماً */
+    position: relative;
+    background: #f8f9fa;
+}
+
+.image-container img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+
+/* التاج (خضار/فاكهة) - أصغر */
+.category-badge {
+    position: absolute;
+    top: 6px; right: 6px;
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* تفاصيل المنتج (مسافات أقل) */
+.product-details {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-title {
+    font-size: 0.9rem; /* خط أصغر ومناسب */
+    color: #2c3e50;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    /* السطرين دول بيخلوا الاسم لو طويل جداً يتقص ويحط نقط ... بدل ما يبوظ شكل الكارت */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 1rem;
+    color: #e67e22;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.product-price span {
+    font-size: 0.7rem;
+    color: #95a5a6;
+    font-weight: normal;
+}
+
+/* أزرار الكمية (+ و -) (ملمومة جداً) */
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: none;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.qty-btn:active { background: #e2e6ea; }
+
+.qty-input {
+    width: 35px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2c3e50;
+    outline: none;
+}
+
+/* زر السلة (رفيع وبسيط) */
+.add-to-cart-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.add-to-cart-btn:active {
+    background: #27ae60;
+}
+
+/* ========================================== */
+/* شبكة عرض المنتجات (عشان يعرض منتجين في الصف للموبايل) */
+/* ========================================== */
+#products-grid {
+    display: grid;
+    /* بيخلي عرض الكارت يبدأ من 140 بيكسل، يعني هيحط كارتين جنب بعض في الموبايل براحة */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+    gap: 12px;
+    padding: 15px;
+}
+
+/* ========================================== */
+/* تصميم كارت المنتج (الحجم الطبيعي والملموم) */
+/* ========================================== */
+.product-card {
+    background: #ffffff;
+    border-radius: 8px; /* دوران أخف */
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06); /* ظل هادي جداً */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+}
+
+/* حاوية الصورة (مربعة عشان تناسب الخضار) */
+.image-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* بيخلي الصورة مربعة تماماً */
+    position: relative;
+    background: #f8f9fa;
+}
+
+.image-container img {
+    width: 100%; 
+    height: 100%;
+    object-fit: cover;
+}
+
+/* التاج (خضار/فاكهة) - أصغر */
+.category-badge {
+    position: absolute;
+    top: 6px; right: 6px;
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* تفاصيل المنتج (مسافات أقل) */
+.product-details {
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-title {
+    font-size: 0.9rem; /* خط أصغر ومناسب */
+    color: #2c3e50;
+    margin: 0 0 4px 0;
+    font-weight: bold;
+    /* السطرين دول بيخلوا الاسم لو طويل جداً يتقص ويحط نقط ... بدل ما يبوظ شكل الكارت */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-price {
+    font-size: 1rem;
+    color: #e67e22;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.product-price span {
+    font-size: 0.7rem;
+    color: #95a5a6;
+    font-weight: normal;
+}
+
+/* أزرار الكمية (+ و -) (ملمومة جداً) */
+.qty-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.qty-btn {
+    background: #f8f9fa;
+    color: #2c3e50;
+    border: none;
+    width: 28px; height: 28px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.qty-btn:active { background: #e2e6ea; }
+
+.qty-input {
+    width: 35px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #2c3e50;
+    outline: none;
+}
+
+/* زر السلة (رفيع وبسيط) */
+.add-to-cart-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+}
+
+.add-to-cart-btn:active {
+    background: #27ae60;
+}
+
+/* إشعار الإضافة للسلة (Toast) */
+.toast-msg {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(44, 62, 80, 0.95);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    z-index: 10000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none; /* مخفي في البداية */
+    animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+    0% { bottom: 0; opacity: 0; }
+    20% { bottom: 20px; opacity: 1; }
+    80% { bottom: 20px; opacity: 1; }
+    100% { bottom: 0; opacity: 0; }
+}
+
+/* تنسيق الخط واللون */
+.glowing-logo {
+    font-family: 'Playfair Display', serif; /* خط أنيق جداً */
+    font-size: 2.5rem;
+    color: #27ae60;;;;
+    text-align: center;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    /* تأثير التوهج */
+    text-shadow: 
+        0 0 10px #27ae60,
+        0 0 20px #27ae60,
+        0 0 40px #27ae60;
+    animation: glow-pulse 2s infinite alternate;
+}
+
+/* حركة التوهج المتغير */
+@keyframes glow-pulse {
+    from {
+        text-shadow: 0 0 10px #27ae60, 0 0 20px #2ecc71;
+        transform: scale(1);
+    }
+    to {
+        text-shadow: 0 0 20px #2ecc71, 0 0 40px #2ecc71, 0 0 60px #27ae60;
+        transform: scale(1.02);
+    }
+}
+
+
+/* الحاوية الأساسية تكون مرنة */
+.checkout-wrapper {
+    display: flex;
+    flex-wrap: wrap; /* عشان العناصر تنزل تحت بعض في الموبايل */
+    gap: 20px;
+    padding: 15px;
+    justify-content: center;
+}
+
+/* شاشة الكمبيوتر (كبير) */
+@media (min-width: 992px) {
+    .invoice-card { width: 45%; }
+    .customer-info-form { width: 50%; }
+}
+
+/* شاشة الموبايل (صغير) */
+@media (max-width: 768px) {
+    .invoice-card, .customer-info-form {
+        width: 100%; /* تأخذ العرض بالكامل */
+    }
+    .glowing-logo {
+        font-size: 1.8rem; /* تصغير اللوجو شوية في الموبايل */
+    }
+}
+
+
+.back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
+    background-color: #27ae60; /* لون الطبيعة الأخضر */
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.back-home-btn:hover {
+    background-color: #219150;
+    transform: translateY(-2px); /* حركة خفيفة للفوق */
+    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+}
+
+
+.invoice-header {
+    text-align: center; /* لجعل المحتوى في الوسط */
+    margin-bottom: 30px; /* مسافة بين العنوان والفاتورة */
+    margin-top: 10px;
+}
+
+.invoice-header i {
+    font-size: 2.5rem;
+    color: #27ae60; /* لون خضرة الطبيعة */
+    margin-bottom: 10px;
+}
+
+.invoice-header h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #2c3e50;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.invoice-header .separator {
+    width: 60px;
+    height: 4px;
+    background: #27ae60;
+    margin: 10px auto; /* لتوسيط الخط تحت الكلمة */
+    border-radius: 2px;
+}
+
+.invoice-header {
+    display: flex; /* تفعيل خاصية المرونة */
+    flex-direction: column; /* ترتيب العناصر فوق بعض (الأيقونة ثم العنوان ثم الخط) */
+    align-items: center; /* التوسيط الأفقي تماماً */
+    justify-content: center; /* التوسيط الرأسي */
+    text-align: center; /* تأكيد توسيط النص */
+    width: 100%; /* أخذ عرض الصفحة بالكامل لضمان التوسيط */
+    margin: 40px 0 20px 0; /* مسافة من الأعلى ليكون في القمة */
+}
+
+.invoice-header i {
+    font-size: 2.5rem;
+    color: #27ae60;
+    margin-bottom: 10px;
+}
+
+.invoice-header h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #2c3e50;
+    margin: 0;
+    /* تأكد من عدم وجود float: right أو text-align: right هنا */
+}
+
+.invoice-header .separator {
+    width: 80px;
+    height: 4px;
+    background: #27ae60;
+    margin-top: 10px;
+    border-radius: 2px;
+}

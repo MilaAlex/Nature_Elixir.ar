@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إكسير الطبيعة | إتمام الطلب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+
+    <header style="text-align: center; padding: 20px 0;">
+        <div class="logo-container">
+    <h1 class="glowing-logo">Nature's Elixir</h1>
+</div>
+    </header>
+
+    <nav class="nav-bar-horizontal">
+        <div class="nav-item" onclick="location.href='index.html'">
+            <i class="fas fa-home"></i><span>الرئيسية</span>
+        </div>
+        <div class="nav-item" onclick="location.href='categories.ar.html'">
+            <i class="fas fa-leaf"></i><span>التسوق</span>
+        </div>
+        
+        <div class="nav-item cart-nav" onclick="location.href='cart.ar.html'">
+            <i class="fas fa-shopping-basket"></i>
+            <span id="cart-count" class="cart-badge" style="display: none;">0</span>
+            <span>السلة</span>
+        </div>
+    </nav>
+
+    <section id="checkout" class="active">
+        <div class="checkout-wrapper" style="max-width: 900px; margin: auto;">
+            
+            <div class="invoice-header">
+    <i class="fas fa-file-invoice-dollar"></i>
+    <h2>فاتورة المشتريات</h2>
+    <div class="separator"></div>
+</div>
+            
+            <div id="invoice-box" class="invoice-card" style="background: white; color: black; padding: 30px; border-radius: 10px; margin-bottom: 30px; font-size: 1.1rem;">
+                </div>
+
+            <div class="customer-info-form" style="background: rgba(0,0,0,0.5); padding: 40px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="text-align: center; margin-bottom: 30px; color: white;">بيانات التوصيل</h3>
+
+                <input type="text" id="cust-name" class="large-input" placeholder="الاسم الكامل">
+                <input type="tel" id="cust-phone" class="large-input" placeholder="رقم الهاتف"> <select id="cust-country" class="large-input" onchange="updateProvinces()">
+                    <option value="">اختر الدولة</option>
+                </select>
+
+                <select id="cust-province" class="large-input" onchange="updateCities()" disabled>
+                    <option value="">اختر المحافظة</option>
+                </select>
+
+                <select id="cust-city" class="large-input" onchange="updateNeighborhoods()" disabled>
+                    <option value="">اختر المدينة / المنطقة</option>
+                </select>
+
+                <select id="cust-neighborhood" class="large-input" onchange="showFinalInvoice()" disabled>
+                    <option value="">اختر الحي / القرية</option>
+                </select>
+
+                <textarea id="cust-address" class="large-input" placeholder="العنوان بالتفصيل (رقم العمارة، الشقة، علامة مميزة)"></textarea>
+
+                <div style="text-align: center; width: 100%; margin-top: 20px;">
+                    <button class="confirm-btn glow-effect" onclick="sendOrder()">تأكيد وإرسال عبر واتساب <i class="fab fa-whatsapp"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="fixed-footer" style="text-align: center; padding: 15px; background: #222; color: #fff; margin-top: 20px;">
+        جميع الحقوق محفوظة لـ إكسير الطبيعة 2026
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

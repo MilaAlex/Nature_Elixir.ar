@@ -1,0 +1,78 @@
+<script>
+    // التأكد من تسجيل الدخول - تم تعديلها لتكون أكثر استقراراً
+    if(sessionStorage.getItem('admin_auth') !== 'true') { 
+        window.location.href = 'admin-login.ar.html'; 
+    }
+</script>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | إكسير الطبيعة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-leaf"></i> إكسير الطبيعة
+        </div>
+        <a href="admin-index.html" class="active"><i class="fas fa-chart-line"></i> الرئيسية</a>
+        <a href="admin-products.ar.html"><i class="fas fa-box"></i> إدارة المنتجات</a>
+        <a href="admin-settings.ar.html"><i class="fas fa-cog"></i> إعدادات المتجر</a>
+        <a href="admin-orders.ar.html"><i class="fas fa-shopping-cart"></i> سجل الطلبات</a>
+        <a href="../index.html" target="_blank"><i class="fas fa-external-link-alt"></i> زيارة المتجر</a>
+        <button onclick="clearCache()" style="margin-top:20px; background:none; border:1px solid #ff4d4d; color:#ff4d4d; cursor:pointer; padding:5px; border-radius:5px; width:80%; margin-right:10%;">تنظيف الذاكرة 🧹</button>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2>مرحباً بك في لوحة تحكم متجر إكسير الطبيعة 👋</h2>
+            <p>من هنا يمكنك إدارة كل شيء في متجرك بكل سهولة.</p>
+        </div>
+        <a href="../index.html" target="_blank"><i class="fas fa-external-link-alt"></i> زيارة المتجر</a>
+
+        <div class="dashboard-cards">
+            <div class="card">
+                <h3>إجمالي المنتجات</h3>
+                <div class="number" id="stat-products">0</div>
+            </div>
+            <div class="card">
+                <h3>رقم الواتساب المسجل</h3>
+                <div class="number" id="stat-whatsapp" style="font-size: 1.5rem; margin-top: 15px;">غير محدد</div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin-script.js"></script>
+
+    <script>
+        // كود عرض الإحصائيات مع حماية ضد الأخطاء
+        window.addEventListener('DOMContentLoaded', () => {
+            try {
+                const products = JSON.parse(localStorage.getItem('myProducts')) || [];
+                const prodEl = document.getElementById('stat-products');
+                if(prodEl) prodEl.innerText = products.length;
+
+                const config = JSON.parse(localStorage.getItem('storeConfig')) || {};
+                const waEl = document.getElementById('stat-whatsapp');
+                if(waEl) waEl.innerText = config.whatsapp || "لم يتم الضبط";
+            } catch (e) {
+                console.error("خطأ في قراءة البيانات:", e);
+            }
+        });
+
+        // دالة تنظيف الذاكرة لو الموقع هنج
+        function clearCache() {
+            if(confirm("هل تريد تنظيف الذاكرة المؤقتة؟ (لن يحذف المنتجات)")) {
+                sessionStorage.clear();
+                alert("تم التنظيف، يرجى تسجيل الدخول مجدداً.");
+                window.location.href = 'admin-login.ar.html';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اتصل بنا | إكسير الطبيعة</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Cairo', sans-serif;">
+    <header>
+        <div class="logo">تواصل معنا</div>
+        <nav class="nav-links">
+            <style>
+    .btn-elixir {
+        padding: 10px 20px;
+        border: 2px solid #27ae60;
+        color: #27ae60;
+        border-radius: 8px;
+        cursor: pointer;
+        display: inline-block;
+        transition: 0.3s;
+        font-family: 'Cairo', sans-serif;
+    }
+    .btn-elixir:hover {
+        background: #27ae60;
+        color: white;
+    }
+</style>
+
+<div class="btn-elixir" onclick="location.href='index.html'">
+    <i class="fas fa-home"></i> الرئيسية
+</div>
+        </nav>
+    </header>
+
+    <section class="active">
+        <div style="max-width: 800px; margin: auto; background: rgba(0,0,0,0.7); padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(0,0,0,0.5);">
+            <h2 style="color:#cddc39; margin-bottom: 25px; text-align: center;">معلومات التواصل</h2>
+            
+            <div id="contact-dynamic-content" style="font-size: 1.1rem; line-height: 1.8; color: white;">
+                </div>
+
+            <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 30px 0;">
+            
+            <h3 style="color: white; margin-bottom: 20px; text-align: center;">أرسل رسالة سريعة</h3>
+            
+            <input type="text" id="msg-name" placeholder="الاسم بالكامل" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 10px; box-sizing: border-box;">
+            
+            <input type="text" id="msg-contact" placeholder="طريقة التواصل (رقم هاتف / واتساب / إيميل)" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 10px; box-sizing: border-box;">
+            
+            <input type="text" id="msg-time" placeholder="الوقت المناسب للتواصل معك" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 10px; box-sizing: border-box;">
+            
+            <input type="text" id="msg-address" placeholder="العنوان (اختياري)" style="width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 10px; box-sizing: border-box;">
+            
+            <textarea id="msg-body" placeholder="كيف يمكننا مساعدتك؟ اكتب استفسارك هنا..." rows="4" style="width: 100%; border-radius: 8px; padding: 12px; margin-top: 10px; border: none; box-sizing: border-box;"></textarea>
+            
+            <button class="btn-send" onclick="sendQuickMessage()" style="width: 100%; margin-top: 20px; background: #cddc39; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; color: black;">إرسال الاستفسار  </button>
+            
+       </div>
+    </section>
+
+    <script>
+        // 1. جلب المحتوى الديناميكي من الأدمن
+        function loadContactContent() {
+            const container = document.getElementById('contact-dynamic-content');
+            const savedHTML = localStorage.getItem('contactPageHTML');
+            
+            if (savedHTML && savedHTML.trim() !== "") {
+                container.innerHTML = savedHTML;
+            } else {
+                // شكل افتراضي احترافي في حال كانت الخانة فارغة في الأدمن
+                container.innerHTML = `
+                    <div style="text-align: center;">
+                        <p><i class="fas fa-map-marker-alt" style="color:#cddc39"></i> <strong>تغطية الشحن:</strong> العبور، الشروق، مدينتي، التجمع</p>
+                        <p><i class="fab fa-whatsapp" style="color:#cddc39"></i> <strong>واتساب الإدارة:</strong> غير محدد</p>
+                    </div>`;
+            }
+        }
+
+        // 2. إرسال كافة البيانات للواتساب المبرمج في الأدمن
+        function sendQuickMessage() {
+            // جلب البيانات من الخانات الجديدة
+            const name = document.getElementById('msg-name').value;
+            const contactMethod = document.getElementById('msg-contact').value;
+            const bestTime = document.getElementById('msg-time').value;
+            const address = document.getElementById('msg-address').value;
+            const body = document.getElementById('msg-body').value;
+            
+            // جلب رقم الواتساب من إعدادات الأدمن
+           const config = JSON.parse(localStorage.getItem('storeConfig')) || { whatsapp: "" };
+
+            // التحقق من الخانات الأساسية
+            if(!name || !contactMethod || !body) {
+                return alert("يرجى ملء الاسم، طريقة التواصل، ونص الرسالة ⚠️");
+            }
+
+            // تنسيق الرسالة لتصلك بشكل احترافي
+            let text = `*📩 استفسار جديد - إكسير الطبيعة*%0A`;
+            text += `--------------------------%0A`;
+            text += `👤 *الاسم:* ${name}%0A`;
+            text += `📱 *التواصل:* ${contactMethod}%0A`;
+            text += `⏰ *الوقت المناسب:* ${bestTime}%0A`;
+            text += `📍 *العنوان:* ${address}%0A`;
+            text += `--------------------------%0A`;
+            text += `💬 *الرسالة:*%0A${body}`;
+
+            // فتح الواتساب
+            window.open(`https://wa.me/${config.whatsapp}?text=${text}`, '_blank');
+        }
+
+        window.onload = loadContactContent;
+    </script>
+</body>
+</html>
