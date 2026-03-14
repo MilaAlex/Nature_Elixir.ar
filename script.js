@@ -3,6 +3,7 @@
 // ==========================================
 const CART_KEY = 'userCart'; 
 const PRODUCTS_KEY = 'myProducts'; // نفس المفتاح المستخدم في الإدارة
+const SHIPPING_KEY = 'shippingPaths'; // ده السطر اللي هيصلح جداول الشحن
 let shippingHierarchy = JSON.parse(localStorage.getItem('shippingHierarchy')) || [];
 let storeConfig = JSON.parse(localStorage.getItem('storeConfig')) || { whatsapp: "", serviceFee: 0 };
 
